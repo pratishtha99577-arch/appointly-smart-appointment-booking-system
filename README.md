@@ -1,166 +1,440 @@
-# Appointly — Smart Appointment & Booking System
 
-A full-stack appointment booking platform built to demonstrate **React, Spring Boot, MySQL, JWT authentication, REST APIs, JPA, role-based authorization, and responsive UI design**.
+Appointly — Smart Appointment & Booking System
 
-## Tech Stack
+A full-stack appointment booking platform built with React, Spring Boot, MySQL, and JWT authentication.
 
-### Frontend
-- React + Vite
-- JavaScript
-- Lucide React
-- Responsive CSS
-- JWT-based session handling
+Appointly allows users to register, securely log in, browse available services, book appointments, view their appointments, and cancel bookings. It also includes role-based admin functionality for managing services and viewing appointments.
 
-### Backend
-- Java 17
-- Spring Boot 3
-- Spring Web
-- Spring Data JPA
-- Spring Security
-- JWT (JJWT)
-- Bean Validation
-- MySQL
-- Maven
+The project was developed as a portfolio project to demonstrate full-stack Java development, REST API design, authentication, authorization, database integration, and responsive frontend development.
 
-## Features
+---
+
+✨ Features
+
+👤 User Features
 
 - User registration and login
-- BCrypt password hashing
-- JWT authentication
-- USER / ADMIN roles
-- Browse appointment services
-- Authenticated appointment booking
+- Secure password hashing using BCrypt
+- JWT-based authentication
+- Browse available services
+- Book appointments
 - View personal appointments
 - Cancel appointments
-- Admin service creation
-- Admin appointment overview
-- Validation and centralized error responses
+- Form validation and error handling
+- Responsive user interface
+
+🛡️ Admin Features
+
+- Role-based "USER" / "ADMIN" authorization
+- Create appointment services
+- View all appointments
+- Backend-protected admin endpoints
+- Automatic admin account seeding for local development
+
+🔐 Security
+
+- Spring Security integration
+- JWT authentication
+- BCrypt password hashing
+- Role-based authorization
+- Protected REST endpoints
+- Environment-based configuration for sensitive credentials
 - CORS configuration
-- MySQL persistence
-- Responsive premium interface
+- Centralized exception handling
+- Validation of incoming requests
 
-## Project Structure
+---
 
-```text
-Smart_Appointment_Booking_System/
-├── frontend/
+🛠️ Tech Stack
+
+Frontend
+
+Technology| Purpose
+React| User interface
+Vite| Frontend development/build tool
+JavaScript| Application logic
+CSS| Responsive UI styling
+Lucide React| Icons
+
+Backend
+
+Technology| Purpose
+Java 17| Backend programming language
+Spring Boot 3| Backend framework
+Spring Web| REST APIs
+Spring Data JPA| Database access
+Spring Security| Authentication & authorization
+JJWT| JWT generation and validation
+Bean Validation| Request validation
+Maven| Dependency management/build
+
+Database
+
+- MySQL 8+
+- Hibernate / JPA
+
+---
+
+🏗️ Application Architecture
+
+                    ┌──────────────────────┐
+                    │      React UI        │
+                    │      Frontend        │
+                    └──────────┬───────────┘
+                               │
+                               │ HTTP / REST API
+                               ▼
+                    ┌──────────────────────┐
+                    │   Spring Boot API    │
+                    │      Backend         │
+                    └──────────┬───────────┘
+                               │
+                    ┌──────────┴───────────┐
+                    │                      │
+                    ▼                      ▼
+             JWT Authentication       Service Layer
+                    │                      │
+                    │                      ▼
+                    │               Spring Data JPA
+                    │                      │
+                    └──────────┬───────────┘
+                               ▼
+                       ┌──────────────┐
+                       │    MySQL     │
+                       │   Database   │
+                       └──────────────┘
+
+Request Flow
+
+React Frontend
+      ↓
+REST API
+      ↓
+JWT Authentication
+      ↓
+Spring Security
+      ↓
+Controller
+      ↓
+Service / Business Logic
+      ↓
+JPA Repository
+      ↓
+MySQL
+
+---
+
+📁 Project Structure
+
+appointly-smart-appointment-booking-system/
+│
 ├── backend/
+│   ├── src/
+│   │   └── main/
+│   │       ├── java/com/appointly/
+│   │       │   ├── config/
+│   │       │   ├── controller/
+│   │       │   ├── dto/
+│   │       │   ├── model/
+│   │       │   ├── repository/
+│   │       │   └── security/
+│   │       │
+│   │       └── resources/
+│   │           └── application-example.properties
+│   │
+│   └── pom.xml
+│
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── vite.config.js
+│
 ├── docs/
+│   ├── API.md
+│   └── SCREENSHOTS.md
+│
 ├── .gitignore
 └── README.md
-```
 
-## 1. Backend Setup
+---
 
-Requirements:
+🚀 Getting Started
+
+Follow these steps to run Appointly locally.
+
+Prerequisites
+
+Make sure you have installed:
+
 - Java 17+
 - Maven 3.9+
+- Node.js 18+
 - MySQL 8+
+- Git
 
-Create a MySQL database:
+---
 
-```sql
+⚙️ Backend Setup
+
+1. Clone the repository
+
+git clone https://github.com/pratishtha99577-arch/appointly-smart-appointment-booking-system.git
+cd appointly-smart-appointment-booking-system
+
+2. Create the MySQL database
+
+Open MySQL Workbench or MySQL CLI and run:
+
 CREATE DATABASE appointly;
-```
+
+3. Configure the backend
 
 Copy:
 
-```text
 backend/src/main/resources/application-example.properties
-```
 
 to:
 
-```text
 backend/src/main/resources/application.properties
-```
 
-Then update your local MySQL username/password and JWT secret.
+Update the local database credentials and JWT configuration.
 
-Run:
+Example:
 
-```bash
+spring.datasource.url=jdbc:mysql://localhost:3306/appointly
+spring.datasource.username=YOUR_USERNAME
+spring.datasource.password=YOUR_PASSWORD
+
+spring.jpa.hibernate.ddl-auto=update
+
+jwt.secret=YOUR_SECRET_KEY
+
+«Important: Never commit your real "application.properties", database password, or JWT secret to GitHub.»
+
+The project ".gitignore" is configured to keep sensitive local configuration files out of the repository.
+
+4. Start the backend
+
 cd backend
 mvn spring-boot:run
-```
 
-Backend starts at:
+The backend will normally run at:
 
-```text
 http://localhost:8080
-```
 
-## 2. Frontend Setup
+---
 
-Requirements:
-- Node.js 18+
+💻 Frontend Setup
 
-Run:
+Open another terminal.
 
-```bash
+1. Navigate to frontend
+
 cd frontend
+
+2. Install dependencies
+
 npm install
-npm run dev
-```
 
-Frontend starts at the Vite URL shown in the terminal, normally:
+3. Configure API URL
 
-```text
-http://localhost:5173
-```
+Create a ".env" file if required:
 
-Optional `.env`:
-
-```text
 VITE_API_URL=http://localhost:8080/api
-```
 
-## Demo Admin
+4. Start the frontend
 
-The backend seeds an admin account on first startup:
+npm run dev
 
-```text
-Email: admin@appointly.local
-Password: Admin@12345
-```
+Vite will provide the local development URL, normally:
 
-Change the password before using this project outside a demo environment.
+http://localhost:5173
 
-## Main API Endpoints
+---
 
-### Authentication
+🔑 Demo Admin
 
-```text
-POST /api/auth/register
-POST /api/auth/login
-```
+For local development, the backend automatically seeds an administrator account when the application starts for the first time.
 
-### Services
+The credentials are defined inside the backend's data seeding configuration.
 
-```text
-GET  /api/services
-POST /api/admin/services
-```
+«For security reasons, demo credentials should not be reused in a production environment. Change or disable the seeded credentials before deployment.»
 
-### Appointments
+---
 
-```text
-POST   /api/appointments
-GET    /api/appointments/my
-PATCH  /api/appointments/{id}/cancel
-GET    /api/admin/appointments
-```
+📡 REST API
 
-## Portfolio Notes
+Authentication
 
-This project is intentionally structured as a portfolio-ready full-stack application. It demonstrates the flow:
+Method| Endpoint| Description
+POST| "/api/auth/register"| Register a new user
+POST| "/api/auth/login"| Authenticate a user
 
-**React UI → REST API → JWT Security → Spring Service Layer → JPA → MySQL**
+Services
 
-For production deployment, use environment variables for database credentials and JWT secrets, HTTPS, stronger operational logging, rate limiting, and a managed database.
+Method| Endpoint| Access
+GET| "/api/services"| Public
+POST| "/api/admin/services"| Admin
 
-## Author
+Appointments
 
-**Pratishtha Patel**
+Method| Endpoint| Access
+POST| "/api/appointments"| Authenticated User
+GET| "/api/appointments/my"| Authenticated User
+PATCH| "/api/appointments/{id}/cancel"| Authenticated User
+GET| "/api/admin/appointments"| Admin
 
-Built as a portfolio project to demonstrate full-stack Java development.
+For detailed API information, see:
+
+docs/API.md
+
+---
+
+🗄️ Database
+
+Appointly uses MySQL with Spring Data JPA.
+
+The application manages entities including:
+
+- Users
+- Services
+- Appointments
+- Roles
+- Appointment Status
+
+Hibernate/JPA automatically manages the database schema during local development.
+
+---
+
+🧪 Functionality Tested
+
+The application has been tested locally for the following flows:
+
+- ✅ User registration
+- ✅ User login
+- ✅ JWT authentication
+- ✅ Service retrieval
+- ✅ Appointment booking
+- ✅ Viewing personal appointments
+- ✅ Appointment cancellation
+- ✅ Admin authentication/authorization
+- ✅ Admin service creation
+- ✅ Admin appointment retrieval
+- ✅ MySQL persistence
+- ✅ Frontend-backend communication
+- ✅ Validation and error handling
+
+---
+
+📸 Screenshots
+
+Screenshots and visual documentation can be added to:
+
+docs/SCREENSHOTS.md
+
+Recommended screenshots include:
+
+1. Login page
+2. Registration page
+3. Services page
+4. Appointment booking
+5. My Appointments
+6. Cancellation flow
+7. Admin functionality
+8. MySQL database tables
+
+---
+
+🔒 Production Considerations
+
+This project is currently designed as a portfolio/development application.
+
+Before production deployment, the following improvements should be implemented:
+
+- Use environment variables for all secrets
+- Use a managed production database
+- Enable HTTPS
+- Replace development admin credentials
+- Add rate limiting
+- Add stronger authentication policies
+- Add production logging and monitoring
+- Add automated tests
+- Configure production CORS rules
+- Add API documentation using OpenAPI/Swagger
+- Use production-grade database migrations
+
+---
+
+🔮 Future Improvements
+
+Possible future enhancements include:
+
+- 📅 Calendar-based appointment scheduling
+- 🔔 Email appointment confirmations
+- 📱 SMS notifications
+- 👨‍💼 Complete admin dashboard
+- 📊 Admin analytics and booking statistics
+- 🔎 Advanced service search and filtering
+- ⏰ Automatic appointment reminders
+- 💳 Online payment integration
+- 🧪 Automated unit and integration testing
+- 🐳 Docker support
+- ☁️ Cloud deployment
+- 📖 Swagger/OpenAPI documentation
+
+---
+
+🎯 What This Project Demonstrates
+
+This project demonstrates practical experience with:
+
+- Full-stack application development
+- Java and Spring Boot
+- RESTful API development
+- React frontend development
+- JWT authentication
+- Spring Security
+- Role-based authorization
+- BCrypt password hashing
+- MySQL database integration
+- JPA/Hibernate
+- Maven
+- Git and GitHub
+- Frontend-backend integration
+- Environment-based configuration
+- Error handling and validation
+- Responsive UI development
+
+The complete application follows the architecture:
+
+React
+  ↓
+REST API
+  ↓
+Spring Boot
+  ↓
+Spring Security + JWT
+  ↓
+JPA / Hibernate
+  ↓
+MySQL
+
+---
+
+👩‍💻 Author
+
+Pratishtha Patel
+
+Integrated MCA Student | Full-Stack Developer
+
+GitHub:
+https://github.com/pratishtha99577-arch
+
+---
+
+⭐ Project
+
+If you find this project useful or interesting, consider giving the repository a ⭐ on GitHub.
+
+Appointly — Smart Appointment & Booking System
